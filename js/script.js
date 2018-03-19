@@ -9,9 +9,11 @@ function newGame() {
 
     var psNum = generatePossibleNumber(rows, cols, blks);
     var sol = solveGrid(psNum, rows);
+
+    var puzzle = makeItPuzzle(sol, 3);
     //var PRow = generatePossibleRows(psNum);
 
-    p.innerText = grid + "\n" + sol;
+    p.innerText = grid + "\n" + sol + "\n" + puzzle;
     k.appendChild(p);
 }
 
@@ -37,8 +39,8 @@ function getBlocks(grid) {
 function getGridInit() {
     //var log = "";
     var rand = [];
-    for (var i = 0; i < 3; i++) {
-        var num = Math.floor(Math.random() * 9 + 1);
+    for (var i = 1; i <= 9; i++) {
+        //var num = Math.floor(Math.random() * 9 + 1);
         var row = Math.floor(Math.random() * 9);
         var col = Math.floor(Math.random() * 9);
         //log += "num is " + num + ". in ( " + row + ", " + col + " )\n";
@@ -49,7 +51,7 @@ function getGridInit() {
             //log += "result [" + j + ", 0] = " + result[j, 0] + ". and num = " + num + "\n";
             //log += "result [" + j + ", 0] row = " + result[j, 1] + ". and num row = " + row + "\n";
             //log += "result [" + j + ", 0] col = " + result[j, 1] + ". and num col = " + col + "\n";
-            if (rand[j][0] == num | (rand[j][1] == row & rand[j][2] == col)) {
+            if (rand[j][0] == i | (rand[j][1] == row & rand[j][2] == col)) {
                 //log += "result of result[" + j + ", 0] == " + num + " is " + result[j, 0] == num + "\n";
                 //log += "result of result[" + j + ", 1] == " + row + " is " + result[j, 1] == row + "\n";
                 //log += "result of result[" + j + ", 2] == " + col + " is " + result[j, 2] == col + "\n";
@@ -60,7 +62,7 @@ function getGridInit() {
         }
         if (accept) {
             //log += "number [" + num + "," + row + "," + col + "] is accepted \n";
-            rand[i] = [num, row, col];
+            rand.push([i, row, col]);
         }
         /*else {
             log += "number [" + num + "," + row + "," + col + "] is not accepted \n";
@@ -188,6 +190,46 @@ function solveGrid(possibleNumber, rows) {
             alert("Can not Solve , Invalid Input\nTotal time : {0} ms");
             break;
     }*/
+}
+
+/*
+    difficulty:
+    // expert   : 0;
+    // hard     : 1;
+    // Normal   : 2;
+    // easy     : 3;
+    // very easy: 4;
+*/
+function makeItPuzzle(grid, difficulty) {
+    var remainedValues = 81;
+    var puzzle = grid.slice(0);
+    while (remainedValues > (difficulty * 5 + 20)) {
+        var x = Math.floor(Math.random() * 9);
+        var y = Math.floor(Math.random() * 9);
+        remainedValues = clearValue(puzzle, x, y, remainedValues);
+    }
+    return puzzle;
+}
+
+function clearValue(grid, x, y, remainedValues) {
+    var sym = getSymmetry(x, y);    //Symmetry
+    if (grid[y][x] != 0) {
+        grid[y] = replaceCharAt(grid[y], x, "0")
+        remainedValues--;
+        if (x != sym[0] && y != sym[1]) {
+            grid[sym[1]] = replaceCharAt(grid[sym[1]], sym[0], "0")
+            remainedValues--;
+        }
+    }
+    return remainedValues;
+}
+
+
+
+function getSymmetry(x, y) {
+    var symX = 8 - x;  //Symmetry
+    var symY = 8 - y;
+    return [symX, symY];
 }
 
 newGame();
