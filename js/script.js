@@ -11,6 +11,8 @@ function newGame() {
     var sol = solveGrid(psNum, rows);
 
     var puzzle = makeItPuzzle(sol, 3);
+
+    ViewPuzzle(sol);
     //var PRow = generatePossibleRows(psNum);
 
     p.innerText = grid + "\n" + sol + "\n" + puzzle;
@@ -230,6 +232,34 @@ function getSymmetry(x, y) {
     var symX = 8 - x;  //Symmetry
     var symY = 8 - y;
     return [symX, symY];
+}
+
+function ViewPuzzle(grid) {
+    var table = document.getElementById("puzzle-grid");
+    for (var i = 0; i < grid.length; i++) {
+        for (var j = 0; j < grid[i].length; j++) {
+            var input = table.rows[i].cells[j].getElementsByTagName('input')[0];
+            if (grid[i][j] == "0") {
+                input.disabled = false;
+                input.value = "";
+            }
+            else {
+                input.disabled = true;
+                input.value = grid[i][j];
+            }
+        }
+    }
+}
+
+function checkInput(input) {
+    if (input.value[0] < '1' || input.value[0] > '9') {
+        if (input.value != "?" && input.value != "؟") {
+            input.value = "";
+            alert("only numbers [1-9] and question mark '?' are allowed!!");
+            input.focus()
+        }
+    }
+
 }
 
 newGame();
