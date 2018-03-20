@@ -20,20 +20,19 @@ function newGame() {
 }
 
 function getColomns(grid) {
-    var result = [];
-    for (var i in grid) {
-        for (var j in grid[i]) {
+    var result = ["", "", "", "", "", "", "", "", ""];
+    for (var i = 0; i < 9; i++) {
+        for (var j = 0; j < 9; j++)
             result[j] += grid[i][j];
-        }
     }
     return result;
 }
 
 function getBlocks(grid) {
-    var result = [];
+    var result = ["", "", "", "", "", "", "", "", ""];
     for (var i = 0; i < 9; i++) {
         for (var j = 0; j < 9; j++)
-            result[(i / 3) * 3 + (j / 3)] += grid[i][j];
+            result[Math.floor(i / 3) * 3 + Math.floor(j / 3)] += grid[i][j];
     }
     return result;
 }
@@ -103,8 +102,10 @@ function generatePossibleNumber(rows, colomns, blocks) {
                 psb[i * 9 + j] += rows[i][j];
             } else {
                 for (var k = '1'; k <= '9'; k++) {
-                    if (!rows[i].includes(k) && !colomns[j].includes(k) && !blocks[((i / 3) * 3) + (j / 3) % 3].includes(k))
-                        psb[i * 9 + j] += k;
+                    if (!rows[i].includes(k))
+                        if (!colomns[j].includes(k))
+                            if (!blocks[Math.floor(i / 3) * 3 + Math.floor(j / 3)].includes(k))
+                                psb[i * 9 + j] += k;
                 }
             }
         }
@@ -143,15 +144,10 @@ function nextStep(level, possibleNumber, rows, solotion) {
             solotion[i] = rows[i];
         solotion[level] = y[num];
         if (level < 8) {
-            var col = ["", "", "", "", "", "", "", "", ""];
-            for (var i = 0; i < 9; i++)
-                for (var j = 0; j < 9; j++)
-                    col[i] += solotion[j][i];
-            var sub_arr = [];
-            for (var i = 0; i < 9; i++)
-                for (var j = 0; j < 9; j++)
-                    sub_arr[(i / 3) * 3 + (j / 3)] += solotion[i][j];
-            var poss = generatePossibleNumber(solotion, col, sub_arr);
+            var cols = getColomns(solotion);
+            var blocks = getBlocks(solotion);
+
+            var poss = generatePossibleNumber(solotion, cols, blocks);
             if (nextStep(level + 1, poss, rows, solotion) == 1)
                 return 1;
         }
