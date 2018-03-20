@@ -1,0 +1,55 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    background-color: #FAFAFA;
+}
+
+table {
+    border: 2px solid #000000;
+    margin: 2em;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+td {
+    border: 1px solid #000000;
+    text-align: center;
+    vertical-align: middle;
+}
+
+td input {
+    color: #000000;
+    padding: 0;
+    border: 0;
+    text-align: center;
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+    background-color: #FFFFFF;
+    outline: none;
+    text-transform: uppercase;
+}
+
+input:disabled {
+    background-color: #EEEEEE;
+}
+
+tr:nth-child(3n) {
+    border-bottom: 4px solid #000000;
+}
+
+tr:nth-child(3n+1) {
+    border-top: 4px solid #000000;
+}
+
+td:nth-child(3n) {
+    border-right: 4px solid #000000;
+}
+
+td:nth-child(3n+1) {
+    border-left: 4px solid #000000;
+}
