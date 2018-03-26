@@ -1,22 +1,61 @@
-function newGame() {
-    var k = document.getElementById("sudoku");
-    var p = document.createElement("p");
-    var grid = getGridInit();
+var gameId = 0;
+var puzzle = [];
+var solution = [];
+var remaining = [9, 9, 9, 9, 9, 9, 9, 9, 9];
+var timer = 0;
+var pauseTimer = false;
+var intervalId;
+var gameOn = false;
 
+
+function startGame() {
+    var difficulties = document.getElementsByName('difficulty');
+    var difficulty = 5;
+    for (var i = 0; i < difficulties.length; i++) {
+        if (difficulties[i].checked) {
+            newGame(4 - i);
+            difficulty = i;
+            break;
+        }
+    }
+    if (difficulty > 4)
+        newGame(5);
+
+    hideDialog();
+    gameId++;
+    document.getElementById("game-number").innerText = "game #" + gameId;
+    document.getElementById("game-difficulty").innerText = difficulty < difficulties.length ? difficulties[difficulty].value : "solved";
+}
+
+
+
+function newGame(difficulty) {
+    /*var k = document.getElementById("sudoku");
+    var p = document.createElement("p");
+    
+
+
+    //var PRow = generatePossibleRows(psNum);
+
+    /*p.innerText = grid + "\n" + sol + "\n" + puzzle;
+    k.appendChild(p);*/
+    var grid = getGridInit();
     var rows = grid;
     var cols = getColomns(grid);
     var blks = getBlocks(grid);
 
     var psNum = generatePossibleNumber(rows, cols, blks);
-    var sol = solveGrid(psNum, rows);
+    solution = solveGrid(psNum, rows);
 
-    var puzzle = makeItPuzzle(sol, 3);
+    timer = 0;
+    for (var i in remaining)
+        remaining[i] = 9;
 
-    ViewPuzzle(sol);
-    //var PRow = generatePossibleRows(psNum);
-
-    p.innerText = grid + "\n" + sol + "\n" + puzzle;
-    k.appendChild(p);
+    puzzle = makeItPuzzle(solution, difficulty);
+    gameOn = true;
+    ViewPuzzle(puzzle);
+    updateRemainingTable();
+    startTimer();
 }
 
 function getColomns(grid) {
@@ -199,6 +238,8 @@ function solveGrid(possibleNumber, rows) {
     // very easy: 4;
 */
 function makeItPuzzle(grid, difficulty) {
+    if (!(difficulty < 5 && difficulty > -1))
+        difficulty = 13;
     var remainedValues = 81;
     var puzzle = grid.slice(0);
     while (remainedValues > (difficulty * 5 + 20)) {
@@ -235,6 +276,9 @@ function ViewPuzzle(grid) {
     for (var i = 0; i < grid.length; i++) {
         for (var j = 0; j < grid[i].length; j++) {
             var input = table.rows[i].cells[j].getElementsByTagName('input')[0];
+            input.classList.remove("right-cell");
+            input.classList.remove("worning-cell");
+            input.classList.remove("wrong-cell");
             if (grid[i][j] == "0") {
                 input.disabled = false;
                 input.value = "";
@@ -242,6 +286,7 @@ function ViewPuzzle(grid) {
             else {
                 input.disabled = true;
                 input.value = grid[i][j];
+                remaining[grid[i][j] - 1]--;
             }
         }
     }
@@ -258,4 +303,223 @@ function checkInput(input) {
 
 }
 
-newGame();
+//newGame();
+
+
+// Material Design Ripple Buttons
+
+window.onload = function () {
+    var rippleButtons = document.getElementsByClassName("button");
+    for (var i = 0; i < rippleButtons.length; i++) {
+        rippleButtons[i].onmousedown = function (e) {
+            var x = e.pageX - this.offsetLeft;
+            var y = e.pageY - this.offsetTop;
+            var rippleItem = document.createElement("div");
+            rippleItem.classList.add('ripple');
+            rippleItem.setAttribute("style", "left: " + x + "px; top: " + y + "px");
+            var rippleColor = this.getAttribute('ripple-color');
+            if (rippleColor)
+                rippleItem.style.background = rippleColor;
+            this.appendChild(rippleItem);
+            setTimeout(function () {
+                rippleItem.parentElement.removeChild(rippleItem);
+            }, 1500);
+        };
+    }
+    var table = document.getElementById("puzzle-grid");
+    for (var i = 0; i < 9; i++) {
+        for (var j = 0; j < 9; j++) {
+            var input = table.rows[i].cells[j].getElementsByTagName('input')[0];
+            input.onchange = function () {
+                this.classList.remove("right-cell");
+                this.classList.remove("worning-cell");
+                this.classList.remove("wrong-cell");
+                checkInput(this);
+                if (this.value > 0 && this.value < 10)
+                    remaining[this.value - 1]--;
+                if (this.oldvalue !== "") {
+                    if (this.oldvalue > 0 && this.oldvalue < 10)
+                        remaining[this.oldvalue - 1]++;
+                }
+                updateRemainingTable();
+            };
+            input.onfocus = function () {
+                this.oldvalue = this.value;
+            };
+        }
+    }
+
+}
+
+
+//End of Material Design Ripple Buttons
+
+function showHamburgerMenu() {
+    var div = document.getElementById("hamburger-menu");
+    var menu = document.getElementById("nav-menu");
+    div.style.display = "block";
+    div.style.visibility = "visible";
+    setTimeout(function () {
+        div.style.opacity = 1;
+        menu.style.left = 0;
+    }, 50);
+}
+
+function hideHamburgerMenu() {
+    var div = document.getElementById("hamburger-menu");
+    var menu = document.getElementById("nav-menu");
+    menu.style.left = "-256px";
+
+    setTimeout(function () {
+        div.style.opacity = 0;
+        //divstyle.display = "none";
+        div.style.visibility = "collapse";
+    }, 200);
+}
+
+
+function showDialog() {
+    hideHamburgerMenu();
+    var dialog = document.getElementById("dialog");
+    var dialogBox = document.getElementById("dialog-box");
+    dialog.style.opacity = 0;
+    dialogBox.style.marginTop = "-500px";
+    dialog.style.display = "block";
+    dialog.style.visibility = "visible";
+
+    setTimeout(function () {
+        dialog.style.opacity = 1;
+        dialogBox.style.marginTop = "64px";
+    }, 200);
+}
+
+function hideDialog() {
+    var dialog = document.getElementById("dialog");
+    var dialogBox = document.getElementById("dialog-box");
+    dialog.style.opacity = 0;
+    dialogBox.style.marginTop = "-500px";
+
+    setTimeout(function () {
+        dialog.style.visibility = "collapse";
+        //dialog.style.display = "none";
+    }, 500);
+}
+
+
+/////// Check region
+
+function checkButtonClick() {
+    if (gameOn) {
+        timer += 60;
+        var currentGrid = [];
+        var table = document.getElementById("puzzle-grid");
+        for (var i = 0; i < 9; i++) {
+            currentGrid.push("");
+            for (var j = 0; j < 9; j++) {
+                var input = table.rows[i].cells[j].getElementsByTagName('input')[0];
+                if (input.value == "" || input.value.length > 1 || input.value == "0") {
+                    input.value = ""
+                    currentGrid[i] += "0";
+                }
+                else
+                    currentGrid[i] += input.value;
+            }
+        }
+        var columns = getColomns(currentGrid);
+        var blocks = getBlocks(currentGrid);
+
+        var errors = 0;
+        var rights = 0;
+        for (var i = 0; i < currentGrid.length; i++) {
+            for (var j = 0; j < currentGrid[i].length; j++) {
+                if (currentGrid[i][j] == "0")
+                    continue;
+                var result = checkValue(i, j, currentGrid, columns, blocks);
+                var input = table.rows[i].cells[j].getElementsByTagName('input')[0];
+                input.classList.remove("right-cell");
+                input.classList.remove("worning-cell");
+                input.classList.remove("wrong-cell");
+                if (result === 1) {
+                    input.classList.add("right-cell");
+                    rights++;
+                } else if (result === 2) {
+                    input.classList.add("worning-cell");
+                } else if (result === 3) {
+                    input.classList.add("wrong-cell");
+                    errors++;
+                } else if (result == 0) {
+                    rights++;
+                }
+            }
+        }
+        if (rights === 81) {
+            gameOn = false;
+            pauseTimer = true;
+            ocument.getElementById("game-difficulty").innerText = "Solved";
+            clearInterval(intervalId);
+            alert("Congrats, You solved it.");
+        }
+        if (errors === 0 && rights === 0) {
+            alert("Congrats, You solved it, but this is not the solution that I want.");
+        }
+    }
+}
+
+function checkValue(i, j, rows, columns, blocks) {
+    if (!(rows[i][j] > '0' && rows[i][j] < ':'))
+        return 3;
+    if (puzzle[i][j] === rows[i][j])
+        return 0;
+    if ((rows[i].indexOf(rows[i][j]) != rows[i].lastIndexOf(rows[i][j]))
+        || (columns[j].indexOf(rows[i][j]) != columns[j].lastIndexOf(rows[i][j]))
+        || (blocks[Math.floor(i / 3) * 3 + Math.floor(j / 3)].indexOf(rows[i][j]) != blocks[Math.floor(i / 3) * 3 + Math.floor(j / 3)].lastIndexOf(rows[i][j]))) {
+        return 3;
+    }
+    if (solution[i][j] !== rows[i][j])
+        return 2;
+    return 1;
+}
+
+
+function updateRemainingTable() {
+    for (var i = 1; i < 10; i++) {
+        var item = document.getElementById("remain-" + i);
+        item.innerText = remaining[i - 1];
+        item.classList.remove("red");
+        item.classList.remove("gray");
+        if (remaining[i - 1] === 0)
+            item.classList.add("gray");
+        else if (remaining[i - 1] < 0 || remaining[i - 1] > 9)
+            item.classList.add("red");
+    }
+}
+
+function startTimer() {
+    var timerDiv = document.getElementById("timer");
+    clearInterval(intervalId);
+    intervalId = setInterval(function () {
+        if (!pauseTimer) {
+            timer++;
+            var min = Math.floor(timer / 60);
+            var sec = timer % 60;
+            timerDiv.innerText = (("" + min).length < 2 ? ("0" + min) : min) + ":" + (("" + sec).length < 2 ? ("0" + sec) : sec);
+        }
+    }, 1000);
+}
+function pauseGameButtonClick() {
+    var icon = document.getElementById("pauseIcon");
+    var text = document.getElementById("pauseText");
+    var table = document.getElementById("puzzle-grid");
+    if (pauseTimer) {
+        icon.innerText = "pause";
+        text.innerText = "Pause";
+        table.style.opacity = 1;
+    }
+    else {
+        icon.innerText = "play_arrow";
+        text.innerText = "Continue";
+        table.style.opacity = 0;
+    }
+
+    pauseTimer = !pauseTimer;
+}
