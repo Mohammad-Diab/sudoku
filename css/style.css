@@ -180,7 +180,7 @@ td:nth-child(3n+1) {
     overflow: hidden;
 }
 
-.nav-head-img img{
+.nav-head-img img {
     width: 100%;
     height: 100%;
 }
@@ -495,6 +495,51 @@ td:nth-child(3n+1) {
     padding: 8px;
 }
 
-.footer a{
+.footer a {
     color: white;
+}
+
+.about-dialog-content {
+    max-width: 720px;
+}
+
+.card-group {
+    overflow: hidden;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 16px 0;
+}
+
+.dialog-card {
+    padding: 16px;
+    margin: 8px;
+}
+
+.about-card-quote {
+    text-align: center;
+    color: #606060;
+    font-size: 14px;
+}
+
+.about-card-img {
+    margin: 16px auto;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, .14);
+    width: fit-content;
+}
+
+.about-card-img img {
+    width: 96px;
+    height: auto;
+}
+
+.about-card-title {
+    font-size: 18px;
+    margin: 8px 0;
+}
+
+.about-card-content {
+    font-size: 16px;
+    margin: 4px 0;
 }
