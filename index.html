@@ -39,7 +39,7 @@
                 <div class="nav-head-title">Sudoku</div>
             </div>
             <ul class="nav-items">
-                <button onclick="showDialog();" ripple-color="#003c8f" class="button nav-item vertical-adjust" href="#">
+                <button onclick="showDialog('dialog');" ripple-color="#003c8f" class="button nav-item vertical-adjust" href="#">
                     <div>
                         <span class="material-icons">add</span>
                         <span style="left:12px;">New game</span>
@@ -51,7 +51,7 @@
                         <span style="left:12px;">Sudoku Solver</span>
                     </div>
                 </button>
-                <button ripple-color="#003c8f" class="button nav-item vertical-adjust" href="#">
+                <button onclick="showDialog('about-dialog');" ripple-color="#003c8f" class="button nav-item vertical-adjust" href="#">
                     <div>
                         <span class="material-icons">star</span>
                         <span style="left:12px;">About</span>
@@ -72,13 +72,13 @@
     </div>
 
     <div class="floating">
-        <button onclick="showDialog();" class="button floating-btn vertical-adjust">
+        <button onclick="showDialog('dialog');" class="button floating-btn vertical-adjust">
             <span class="material-icons">add</span>
         </button>
     </div>
 
     <div id="dialog" class="dialog">
-        <div onclick="hideDialog();" class="dialog-blank"></div>
+        <div onclick="hideDialog('dialog');" class="dialog-blank"></div>
         <div id="dialog-box" class="dialog-content">
             <div class="dialog-header">New game</div>
 
@@ -115,7 +115,58 @@
 
             <div class="dialog-footer">
                 <button onclick="startGame();" ripple-color="#003c8f" class="button dialog-btn vertical-adjust" href="#">OK</button>
-                <button onclick="hideDialog();" ripple-color="#202020" class="button dialog-btn vertical-adjust" href="#">Cancel</button>
+                <button onclick="hideDialog('dialog');" ripple-color="#202020" class="button dialog-btn vertical-adjust" href="#">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="about-dialog" class="dialog">
+        <div onclick="hideDialog('about-dialog');" class="dialog-blank"></div>
+        <div id="about-dialog-box" class="dialog-content about-dialog-content">
+            <div class="dialog-header">CodeTeam6</div>
+
+            <div class="dialog-body">
+                <p>about us</p>
+                <div class="card-group">
+                    <div class="card dialog-card">
+                        <div class="about-card-quote">«»</div>
+                        <div class="about-card-img">
+                            <img src="img/a-abdallah.jpg" alt="" />
+                        </div>
+                        <div class="about-card-title">Ahmad Abdalla</div>
+                        <div class="about-card-content">Egypt</div>
+                    </div>
+                    <div class="card dialog-card">
+                        <div class="about-card-quote">«»</div>
+                        <div class="about-card-img">
+                            <img src="img/a-alrifai.jpg" alt="" />
+                        </div>
+                        <div class="about-card-title">Ayman Alrifai</div>
+                        <div class="about-card-content">Libya</div>
+                    </div>
+                    <div class="card dialog-card">
+                        <div class="about-card-quote">«silent but deadly»</div>
+                        <div class="about-card-img">
+                            <img src="img/m-diab.jpg" alt="" />
+                        </div>
+                        <div class="about-card-title">Mohamamd Diab</div>
+                        <div class="about-card-content">Syria</div>
+                    </div>
+                    <div class="card dialog-card">
+                        <div class="about-card-quote">«»</div>
+                        <div class="about-card-img">
+                            <img src="img/r-bhere.jpg" alt="" />
+                        </div>
+                        <div class="about-card-title">Reham Bhere</div>
+                        <div class="about-card-content">Palestine</div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="dialog-footer">
+                <button onclick="hideDialog('about-dialog');" ripple-color="#003c8f" class="button dialog-btn vertical-adjust" href="#">OK</button>
             </div>
         </div>
     </div>
@@ -517,7 +568,7 @@
         <span>with</span>
         <span class="material-icons">favorite</span>
         <span>by </span>
-        <a href="#">#codeTeam6</a>
+        <a onclick="showDialog('about-dialog');" href="#">#codeTeam6</a>
         <span> . © 2018 all right reserved.</span>
     </div>
     <script src="js/script.js"></script>

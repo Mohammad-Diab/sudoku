@@ -21,7 +21,7 @@ function startGame() {
     if (difficulty > 4)
         newGame(5);
 
-    hideDialog();
+    hideDialog('dialog');
     gameId++;
     document.getElementById("game-number").innerText = "game #" + gameId;
     document.getElementById("game-difficulty").innerText = difficulty < difficulties.length ? difficulties[difficulty].value : "solved";
@@ -378,10 +378,10 @@ function hideHamburgerMenu() {
 }
 
 
-function showDialog() {
+function showDialog(dialogId) {
     hideHamburgerMenu();
-    var dialog = document.getElementById("dialog");
-    var dialogBox = document.getElementById("dialog-box");
+    var dialog = document.getElementById(dialogId);
+    var dialogBox = document.getElementById(dialogId + "-box");
     dialog.style.opacity = 0;
     dialogBox.style.marginTop = "-500px";
     dialog.style.display = "block";
@@ -393,9 +393,9 @@ function showDialog() {
     }, 200);
 }
 
-function hideDialog() {
-    var dialog = document.getElementById("dialog");
-    var dialogBox = document.getElementById("dialog-box");
+function hideDialog(dialogId) {
+    var dialog = document.getElementById(dialogId);
+    var dialogBox = document.getElementById(dialogId + "-box");
     dialog.style.opacity = 0;
     dialogBox.style.marginTop = "-500px";
 
