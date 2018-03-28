@@ -382,6 +382,7 @@ function showDialog(dialogId) {
     hideHamburgerMenu();
     var dialog = document.getElementById(dialogId);
     var dialogBox = document.getElementById(dialogId + "-box");
+    dialogBox.focus();
     dialog.style.opacity = 0;
     dialogBox.style.marginTop = "-500px";
     dialog.style.display = "block";
@@ -522,4 +523,15 @@ function pauseGameButtonClick() {
     }
 
     pauseTimer = !pauseTimer;
+}
+
+window.onclick = function (event) {
+    var d1 = document.getElementById("dialog");
+    var d2 = document.getElementById("about-dialog");
+    
+    if (event.target == d1) {
+        hideDialog("dialog");
+    }else if(event.target == d2){
+        hideDialog("about-dialog");
+    }
 }
