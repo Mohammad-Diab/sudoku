@@ -242,7 +242,7 @@ td:nth-child(3n+1) {
     width: fit-content;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, .14);
     float: left;
-    padding: 32px;
+    padding: 32px 32px 16px 32px;
 }
 
 .status {
@@ -266,7 +266,7 @@ td:nth-child(3n+1) {
 }
 
 .game-status li {
-    margin: 18px 0;
+    margin: 18px 0 0 0;
 }
 
 .vertical-adjust {
@@ -393,8 +393,8 @@ td:nth-child(3n+1) {
 
 .floating-btn {
     position: fixed;
-    bottom: 64px;
-    right: 64px;
+    bottom: 48px;
+    right: 48px;
     border-radius: 50%;
     padding: 12px;
     border: none;
@@ -421,7 +421,7 @@ td:nth-child(3n+1) {
     top: -200px;
     background: #fff;
     width: 90%;
-    max-width: 480px;
+    max-width: 540px;
     height: fit-content;
     margin: auto;
     vertical-align: middle;
@@ -479,19 +479,11 @@ td:nth-child(3n+1) {
     display: inline-block;
 }
 
-.dialog-blank {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
 .footer {
     text-align: center;
     color: white;
     background-color: #49599a;
-    margin: 0;
+    margin: 44px 0 0 0;
     padding: 8px;
 }
 
@@ -508,17 +500,19 @@ td:nth-child(3n+1) {
     width: fit-content;
     margin: 0 auto;
     padding: 16px 0;
+    display: flex;
 }
 
 .dialog-card {
     padding: 16px;
     margin: 8px;
+    max-width: 160px;
 }
 
 .about-card-quote {
-    text-align: center;
     color: #606060;
     font-size: 14px;
+    margin-top: 16px;
 }
 
 .about-card-img {
@@ -535,11 +529,11 @@ td:nth-child(3n+1) {
 }
 
 .about-card-title {
-    font-size: 18px;
+    font-size: 16px;
     margin: 8px 0;
 }
 
 .about-card-content {
-    font-size: 16px;
+    font-size: 15px;
     margin: 4px 0;
 }
