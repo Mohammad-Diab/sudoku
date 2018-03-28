@@ -456,7 +456,7 @@ function checkButtonClick() {
         if (rights === 81) {
             gameOn = false;
             pauseTimer = true;
-            ocument.getElementById("game-difficulty").innerText = "Solved";
+            document.getElementById("game-difficulty").innerText = "Solved";
             clearInterval(intervalId);
             alert("Congrats, You solved it.");
         }
