@@ -71,13 +71,11 @@ td:nth-child(3n+1) {
 .worning-cell {
     box-shadow: inset 0px 0px 20px 3px goldenrod;
 }
-
 /*Material Design*/
 
 .app-bar {
     background: #49599a;
     width: 100%;
-    position: fixed;
     height: 64px;
     color: #fff;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .14);
@@ -178,6 +176,8 @@ td:nth-child(3n+1) {
     top: 16px;
     left: 16px;
     overflow: hidden;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.7)
 }
 
 .nav-head-img img {
@@ -230,7 +230,7 @@ td:nth-child(3n+1) {
     color: gray;
 }
 
-.body {
+.bbody {
     width: 95%;
     max-width: 800px;
     margin: 72px auto 16px auto;
