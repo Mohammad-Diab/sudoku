@@ -82,6 +82,7 @@ td:nth-child(3n+1) {
     color: #fff;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .14);
     z-index: 5;
+    top: 0;
 }
 
 .bar-button {
