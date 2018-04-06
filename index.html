@@ -13,7 +13,7 @@
 
 <body>
     <nav class="app-bar">
-        <button onclick="showHamburgerMenu();" class="button bar-button hamburger-button">
+        <button onclick="HamburgerButtonClick();" class="button bar-button hamburger-button">
             <span class="material-icons">menu</span>
         </button>
         <div class="bar-font title">Sudoku</div>
@@ -39,7 +39,7 @@
                 <div class="nav-head-title">Sudoku</div>
             </div>
             <ul class="nav-items">
-                <button onclick="showDialog('dialog');" ripple-color="#003c8f" class="button nav-item vertical-adjust" href="#">
+                <button onclick="showDialogClick('dialog');" ripple-color="#003c8f" class="button nav-item vertical-adjust" href="#">
                     <div>
                         <span class="material-icons">add</span>
                         <span style="left:12px;">New game</span>
@@ -51,7 +51,7 @@
                         <span style="left:12px;">Sudoku Solver</span>
                     </div>
                 </button>
-                <button onclick="showDialog('about-dialog');" ripple-color="#003c8f" class="button nav-item vertical-adjust" href="#">
+                <button onclick="showDialogClick('about-dialog');" ripple-color="#003c8f" class="button nav-item vertical-adjust" href="#">
                     <div>
                         <span class="material-icons">star</span>
                         <span style="left:12px;">About</span>
@@ -66,13 +66,13 @@
                 </div>
             </ul>
         </nav>
-        <div class="nav-menu-blank" onclick="hideHamburgerMenu()">
+        <div class="nav-menu-blank" onclick="hideHamburgerClick()">
 
         </div>
     </div>
 
     <div class="floating">
-        <button onclick="showDialog('dialog');" class="button floating-btn vertical-adjust">
+        <button onclick="showDialogClick('dialog');" class="button floating-btn vertical-adjust">
             <span class="material-icons">add</span>
         </button>
     </div>
@@ -113,15 +113,15 @@
             </div>
 
             <div class="dialog-footer">
-                <button onclick="startGame();" ripple-color="#003c8f" class="button dialog-btn vertical-adjust" href="#">OK</button>
-                <button onclick="hideDialog('dialog');" ripple-color="#202020" class="button dialog-btn vertical-adjust" href="#">Cancel</button>
+                <button onclick="startGameButtonClick();" ripple-color="#003c8f" class="button dialog-btn vertical-adjust" href="#">OK</button>
+                <button onclick="hideDialogButtonClick('dialog');" ripple-color="#202020" class="button dialog-btn vertical-adjust" href="#">Cancel</button>
             </div>
         </div>
     </div>
 
     <div id="about-dialog" class="dialog">
         
-        <div id="about-dialog-box" onblur="hideDialog('about-dialog');" class="dialog-content about-dialog-content">
+        <div id="about-dialog-box" onblur="hideDialogButtonClick('about-dialog');" class="dialog-content about-dialog-content">
             <div class="dialog-header">CodeTeam6</div>
 
             <div class="dialog-body">
@@ -165,14 +165,14 @@
             </div>
 
             <div class="dialog-footer">
-                <button onclick="hideDialog('about-dialog');" ripple-color="#003c8f" class="button dialog-btn vertical-adjust" href="#">OK</button>
+                <button onclick="hideDialogButtonClick('about-dialog');" ripple-color="#003c8f" class="button dialog-btn vertical-adjust" href="#">OK</button>
             </div>
         </div>
     </div>
 
 
 
-    <button onclick="newGame()">new game</button>
+    <button onclick="startNewGameButtonClick()">new game</button>
     <div class="body" id="sudoku">
         <div class="card game">
             <table id="puzzle-grid">
@@ -567,7 +567,7 @@
         <span>with</span>
         <span class="material-icons">favorite</span>
         <span>by </span>
-        <a onclick="showDialog('about-dialog');" href="#">#codeTeam6</a>
+        <a onclick="showDialogClick('about-dialog');" href="#">#codeTeam6</a>
         <span> . © 2018 all right reserved.</span>
     </div>
     <script src="js/script.js"></script>
