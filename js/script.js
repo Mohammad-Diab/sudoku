@@ -436,7 +436,7 @@ function startGameButtonClick() {
     if (difficulty > 4)
         newGame(5);
 
-        hideDialogButtonClick('dialog');
+    hideDialogButtonClick('dialog');
     gameId++;
     document.getElementById("game-number").innerText = "game #" + gameId;
     document.getElementById("game-difficulty").innerText = difficulty < difficulties.length ? difficulties[difficulty].value : "solved";
@@ -572,6 +572,30 @@ function showDialogClick(dialogId) {
         dialog.style.opacity = 1;
         dialogBox.style.marginTop = "64px";
     }, 200);
+}
+
+function moreOptionButtonClick() {
+    var moreOptionList = document.getElementById("more-option-list");
+    if (moreOptionList.style.visibility == "hidden") {
+        moreOptionList.style.visibility = "visible";
+        setTimeout(function () {
+            moreOptionList.style.maxWidth = "160px";
+            moreOptionList.style.minWidth = "160px";
+            moreOptionList.style.maxHeight = "160px";
+            moreOptionList.style.opacity = "1";
+            //dialog.style.display = "none";
+        }, 20);
+
+    } else {
+        moreOptionList.style.maxWidth = "40px";
+        moreOptionList.style.minWidth = "40px";
+        moreOptionList.style.maxHeight = "10px";
+        moreOptionList.style.opacity = "0";
+        setTimeout(function () {
+            moreOptionList.style.visibility = "hidden";
+            //dialog.style.display = "none";
+        }, 175);
+    }
 }
 
 function hideDialogButtonClick(dialogId) {
