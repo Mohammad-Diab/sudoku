@@ -34,7 +34,6 @@ function newGame(difficulty) {
     solution = solveGrid(psNum, rows);
 
     // reset the game state timer and remaining number
-    // we reset the remaining numbers here because it will be used in the 'makeItPuzzle' function
     timer = 0;
     for (var i in remaining)
         remaining[i] = 9;
@@ -553,6 +552,26 @@ function checkButtonClick() {
             alert("Congrats, You solved it, but this is not the solution that I want.");
         }
     }
+}
+
+// restart game
+function restartButtonClick() {
+
+    //hide the menu
+    moreOptionButtonClick()
+
+    // reset remaining number table
+    for (var i in remaining)
+        remaining[i] = 9;
+
+    // review puzzle
+    ViewPuzzle(puzzle);
+
+    // update remaining numbers table
+    updateRemainingTable();
+
+    //restart the timer
+    timer = -1;
 }
 
 function showDialogClick(dialogId) {
