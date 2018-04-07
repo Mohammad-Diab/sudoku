@@ -560,18 +560,21 @@ function restartButtonClick() {
     //hide the menu
     moreOptionButtonClick()
 
-    // reset remaining number table
-    for (var i in remaining)
-        remaining[i] = 9;
+    if (gameOn) {
+        // reset remaining number table
+        for (var i in remaining)
+            remaining[i] = 9;
 
-    // review puzzle
-    ViewPuzzle(puzzle);
+        // review puzzle
+        ViewPuzzle(puzzle);
 
-    // update remaining numbers table
-    updateRemainingTable();
+        // update remaining numbers table
+        updateRemainingTable();
 
-    //restart the timer
-    timer = -1;
+        // restart the timer
+        // -1 is because it take 1 sec to update the timer so it will start from 0
+        timer = -1;
+    }
 }
 
 function showDialogClick(dialogId) {
