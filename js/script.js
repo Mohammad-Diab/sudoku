@@ -577,6 +577,7 @@ function restartButtonClick() {
     }
 }
 
+// surrender
 function SurrenderButtonClick() {
 
     //hide the menu
@@ -600,6 +601,79 @@ function SurrenderButtonClick() {
 
         // mark game as solved
         document.getElementById("game-difficulty").innerText = "Solved";
+    }
+}
+
+// hint
+function hintButtonClick() {
+
+    //hide the menu
+    moreOptionButtonClick()
+
+    if (gameOn) {
+
+
+        // get list of empty cells and list of wrong cells
+        var empty_cells_list = [];
+        var wrong_cells_list = [];
+        var table = document.getElementById("puzzle-grid");
+        for (var i = 0; i < 9; i++) {
+            for (var j = 0; j < 9; j++) {
+                var input = table.rows[i].cells[j].getElementsByTagName('input')[0];
+                if (input.value == "" || input.value.length > 1 || input.value == "0") {
+                    empty_cells_list.push([i, j])
+                }
+                else {
+                    if (input.value !== solution[i][j])
+                        wrong_cells_list.push([i, j])
+                }
+            }
+        }
+
+        // check if gird is solved if so stop the game
+        if (empty_cells_list.length === 0 && wrong_cells_list.length === 0) {
+            gameOn = false;
+            pauseTimer = true;
+            document.getElementById("game-difficulty").innerText = "Solved";
+            clearInterval(intervalId);
+            alert("Congrats, You solved it.");
+        } else {
+
+            // add one minute to the stopwatch as a cost for given hint
+            timer += 60;
+
+            // get random cell from empty or wrong list and put the currect value in it
+            var input
+            if ((Math.random() < 0.5 && empty_cells_list.length > 0) || wrong_cells_list.length === 0) {
+                var index = Math.floor(Math.random() * empty_cells_list.length)
+                input = table.rows[empty_cells_list[index][0]].cells[empty_cells_list[index][1]].getElementsByTagName('input')[0];
+                input.oldvalue = input.value;
+                input.value = solution[empty_cells_list[index][0]][empty_cells_list[index][1]];
+                remaining[input.value - 1]--;
+            } else {
+                var index = Math.floor(Math.random() * wrong_cells_list.length)
+                input = table.rows[wrong_cells_list[index][0]].cells[wrong_cells_list[index][1]].getElementsByTagName('input')[0];
+                input.oldvalue = input.value;
+                remaining[input.value - 1]++;
+                input.value = solution[wrong_cells_list[index][0]][wrong_cells_list[index][1]];
+                remaining[input.value - 1]--;
+            }
+
+            // update remaining numbers table
+            updateRemainingTable();
+        }
+
+        // make updated cell blinking
+        var count = 0
+        for (var i = 0; i < 6; i++) {
+            setTimeout(function () {
+                if (count % 2 == 0)
+                    input.classList.add("right-cell");
+                else
+                    input.classList.remove("right-cell");
+                count++;
+            }, i * 750)
+        }
     }
 }
 
