@@ -577,6 +577,32 @@ function restartButtonClick() {
     }
 }
 
+function SurrenderButtonClick() {
+
+    //hide the menu
+    moreOptionButtonClick()
+
+    if (gameOn) {
+        // reset remaining number table
+        for (var i in remaining)
+            remaining[i] = 9;
+
+        // review puzzle
+        ViewPuzzle(solution);
+
+        // update remaining numbers table
+        updateRemainingTable();
+
+        // stop the game
+        gameOn = false;
+        pauseTimer = true;
+        clearInterval(intervalId);
+
+        // mark game as solved
+        document.getElementById("game-difficulty").innerText = "Solved";
+    }
+}
+
 function showDialogClick(dialogId) {
     // to hide navigation bar if it opened
     hideHamburgerClick();
