@@ -46,14 +46,17 @@ function newGame(difficulty) {
     // 74 empty cells for hard
     // 79 empty cells for expert
     puzzle = makeItPuzzle(solution, difficulty);
-    gameOn = true;
+
+    // game is on when the difficulty = [0, 4]
+    gameOn = difficulty < 5 && difficulty >= 0;
 
     // update the UI
     ViewPuzzle(puzzle);
     updateRemainingTable();
 
     // finally, start the timer
-    startTimer();
+    if (gameOn)
+        startTimer();
 }
 
 function getGridInit() {
