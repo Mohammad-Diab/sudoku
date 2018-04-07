@@ -17,9 +17,18 @@
             <span class="material-icons">menu</span>
         </button>
         <div class="bar-font title">Sudoku</div>
-        <button class="button bar-button more-button">
-            <span class="material-icons">more_vert</span>
-        </button>
+        <div class="more-option-div more-button">
+            <button onclick="moreOptionButtonClick()" class="button bar-button">
+                <span class="material-icons">more_vert</span>
+            </button>
+            <!-- it is important to put these styles in here because if I do not do that it will not work in javaScript-->
+            <div style="visibility: hidden;max-height: 10px;max-width: 40px;min-width: 40px;" id="more-option-list" class="more-option-list">
+                <button ripple-color="#003c8f" class="button nav-item vertical-adjust" href="#">Hint</button>
+                <button ripple-color="#003c8f" class="button nav-item vertical-adjust" href="#">Restart</button>
+                <button ripple-color="#003c8f" class="button nav-item vertical-adjust" href="#">Surender</button>
+            </div>
+        </div>
+
         <button onclick="pauseGameButtonClick()" class="button bar-button more-button">
             <span id="pauseIcon" class="material-icons">pause</span>
             <span id="pauseText">Pause</span>
@@ -28,8 +37,9 @@
             <span class="material-icons">done_all</span>
             <span>Check</span>
         </button>
-        <!-- <div class="bar-font timer">00:00</div> -->
+
     </nav>
+
     <div id="hamburger-menu" class="hamburger-menu">
         <nav id="nav-menu" class="nav-menu">
             <div class="nav-head">
@@ -120,14 +130,14 @@
     </div>
 
     <div id="about-dialog" class="dialog">
-        
+
         <div id="about-dialog-box" onblur="hideDialogButtonClick('about-dialog');" class="dialog-content about-dialog-content">
             <div class="dialog-header">CodeTeam6</div>
 
             <div class="dialog-body">
                 <p>about us</p>
                 <div class="card-group">
-                    <div class="card dialog-card">                      
+                    <div class="card dialog-card">
                         <div class="about-card-img">
                             <img src="img/a_abdallah.jpg" alt="" />
                         </div>
@@ -165,12 +175,11 @@
             </div>
 
             <div class="dialog-footer">
-                <button onclick="hideDialogButtonClick('about-dialog');" ripple-color="#003c8f" class="button dialog-btn vertical-adjust" href="#">OK</button>
+                <button onclick="hideDialogButtonClick('about-dialog');" ripple-color="#003c8f" class="button dialog-btn vertical-adjust"
+                    href="#">OK</button>
             </div>
         </div>
     </div>
-
-
 
     <div class="body" id="sudoku">
         <div class="card game">
@@ -561,6 +570,7 @@
             -->
         </div>
     </div>
+
     <div class="footer vertical-adjust">
         <span class="material-icons">code</span>
         <span>with</span>

@@ -93,6 +93,7 @@ td:nth-child(3n+1) {
     color: #fff;
     vertical-align: middle;
     padding: 0 22px;
+    transition: all 0.5s;
 }
 
 .bar-button span {
@@ -117,15 +118,9 @@ td:nth-child(3n+1) {
     left: 18px;
 }
 
-/*.timer {
-    position: relative;
-    float: right;
-    right: 18px;
-}*/
-
 .more-button {
     float: right;
-    right: 18px;
+    /*right: 18px;*/
 }
 
 .hamburger-menu {
@@ -537,4 +532,21 @@ td:nth-child(3n+1) {
 .about-card-content {
     font-size: 15px;
     margin: 4px 0;
+}
+
+.more-option-div {
+    position: static;
+    display: inline-block;
+    margin-right: 16px;
+}
+
+.more-option-list {
+    display: block;
+    position: absolute;
+    background-color: #fff;
+    overflow: hidden;
+    box-shadow: 0px 8px 10px 1px rgba(0, 0, 0, 0.14);
+    right: 18px;
+    z-index: 25;
+    transition: all 0.2s cubic-bezier(0.4, 0.0, 0.6, 1);
 }
