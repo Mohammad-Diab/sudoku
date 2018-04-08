@@ -229,7 +229,7 @@ td:nth-child(3n+1) {
 .body {
     width: 95%;
     max-width: 800px;
-    margin: 72px auto 16px auto;
+    margin: 96px auto 16px auto;
     display: flex;
 }
 

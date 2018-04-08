@@ -305,6 +305,7 @@ function startTimer() {
     clearInterval(intervalId);
 
     // update stopwatch value every one second
+    pauseTimer = false;
     intervalId = setInterval(function () {
         if (!pauseTimer) {
             timer++;
