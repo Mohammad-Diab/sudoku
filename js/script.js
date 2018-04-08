@@ -316,6 +316,21 @@ function startTimer() {
     }, 1000);
 }
 
+// hide more option menu
+function hideMoreOptionMenu() {
+    var moreOptionList = document.getElementById("more-option-list");
+    if (moreOptionList.style.visibility == "visible") {
+        moreOptionList.style.maxWidth = "40px";
+        moreOptionList.style.minWidth = "40px";
+        moreOptionList.style.maxHeight = "10px";
+        moreOptionList.style.opacity = "0";
+        setTimeout(function () {
+            moreOptionList.style.visibility = "hidden";
+        }, 175);
+    }
+}
+
+
 // UI Comunication functions
 
 // function that must run when document loaded
@@ -394,11 +409,14 @@ window.onload = function () {
 window.onclick = function (event) {
     var d1 = document.getElementById("dialog");
     var d2 = document.getElementById("about-dialog");
+    var m1 = document.getElementById("more-option-list");
 
     if (event.target == d1) {
         hideDialogButtonClick("dialog");
     } else if (event.target == d2) {
         hideDialogButtonClick("about-dialog");
+    } else if (m1.style.visibility == "visible") {
+        hideMoreOptionMenu();
     }
 }
 
@@ -561,9 +579,6 @@ function checkButtonClick() {
 // restart game
 function restartButtonClick() {
 
-    //hide the menu
-    moreOptionButtonClick()
-
     if (gameOn) {
         // reset remaining number table
         for (var i in remaining)
@@ -583,9 +598,6 @@ function restartButtonClick() {
 
 // surrender
 function SurrenderButtonClick() {
-
-    //hide the menu
-    moreOptionButtonClick()
 
     if (gameOn) {
         // reset remaining number table
@@ -610,12 +622,7 @@ function SurrenderButtonClick() {
 
 // hint
 function hintButtonClick() {
-
-    //hide the menu
-    moreOptionButtonClick()
-
     if (gameOn) {
-
 
         // get list of empty cells and list of wrong cells
         var empty_cells_list = [];
@@ -700,28 +707,22 @@ function showDialogClick(dialogId) {
     }, 200);
 }
 
+// show more option menu
 function moreOptionButtonClick() {
     var moreOptionList = document.getElementById("more-option-list");
-    if (moreOptionList.style.visibility == "hidden") {
-        moreOptionList.style.visibility = "visible";
-        setTimeout(function () {
-            moreOptionList.style.maxWidth = "160px";
-            moreOptionList.style.minWidth = "160px";
-            moreOptionList.style.maxHeight = "160px";
-            moreOptionList.style.opacity = "1";
-            //dialog.style.display = "none";
-        }, 20);
 
-    } else {
-        moreOptionList.style.maxWidth = "40px";
-        moreOptionList.style.minWidth = "40px";
-        moreOptionList.style.maxHeight = "10px";
-        moreOptionList.style.opacity = "0";
-        setTimeout(function () {
-            moreOptionList.style.visibility = "hidden";
-            //dialog.style.display = "none";
-        }, 175);
-    }
+    // timeout to avoid hide menu immediately in window event
+    setTimeout(function () {
+        if (moreOptionList.style.visibility == "hidden") {
+            moreOptionList.style.visibility = "visible";
+            setTimeout(function () {
+                moreOptionList.style.maxWidth = "160px";
+                moreOptionList.style.minWidth = "160px";
+                moreOptionList.style.maxHeight = "160px";
+                moreOptionList.style.opacity = "1";
+            }, 50);
+        }
+    }, 50);
 }
 
 function hideDialogButtonClick(dialogId) {
@@ -748,3 +749,8 @@ function hideHamburgerClick() {
         div.style.visibility = "collapse";
     }, 200);
 }
+
+
+
+
+// sudoku solver section
