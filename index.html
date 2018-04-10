@@ -17,7 +17,7 @@
             <span class="material-icons">menu</span>
         </button>
         <div class="bar-font title">Sudoku</div>
-        <div class="more-option-div more-button">
+        <div id="moreoption-sec" class="more-option-div more-button">
             <button onclick="moreOptionButtonClick()" class="button bar-button">
                 <span class="material-icons">more_vert</span>
             </button>
@@ -29,13 +29,21 @@
             </div>
         </div>
 
-        <button onclick="pauseGameButtonClick()" class="button bar-button more-button">
-            <span id="pauseIcon" class="material-icons">pause</span>
-            <span id="pauseText">Pause</span>
+        <button id="pause-btn" onclick="pauseGameButtonClick()" class="button bar-button more-button">
+            <span id="pause-icon" class="material-icons">pause</span>
+            <span id="pause-text">Pause</span>
         </button>
-        <button onclick="checkButtonClick()" class="button bar-button more-button">
+        <button id="check-btn" onclick="checkButtonClick()" class="button bar-button more-button">
             <span class="material-icons">done_all</span>
             <span>Check</span>
+        </button>
+        <button id="isunique-btn" style="display: none;" onclick="isUniqueButtonClick()" class="button bar-button more-button">
+            <span class="material-icons">call_split</span>
+            <span>Is unique</span>
+        </button>
+        <button id="solve-btn" style="display: none;" onclick="solveButtonClick()" class="button bar-button more-button">
+            <span class="material-icons">border_color</span>
+            <span>Solve</span>
         </button>
 
     </nav>
@@ -55,7 +63,7 @@
                         <span style="left:12px;">New game</span>
                     </div>
                 </button>
-                <button ripple-color="#003c8f" class="button nav-item vertical-adjust" href="#">
+                <button onclick="sudokuSolverMenuClick();" ripple-color="#003c8f" class="button nav-item vertical-adjust" href="#">
                     <div>
                         <span class="material-icons">edit</span>
                         <span style="left:12px;">Sudoku Solver</span>
@@ -481,7 +489,7 @@
                 <li>
                     <div class="vertical-adjust">
                         <span class="material-icons">timer</span>
-                        <span>Time</span>
+                        <span id="timer-label">Time</span>
                     </div>
                     <div id="timer" class="timer">00:00</div>
                 </li>
@@ -489,7 +497,7 @@
                 <li>
                     <div class="vertical-adjust">
                         <span class="material-icons">network_check</span>
-                        <span>Game difficulty</span>
+                        <span id="game-difficulty-label">Game difficulty</span>
                     </div>
                     <div id="game-difficulty" class="timer">undefined</div>
                 </li>
