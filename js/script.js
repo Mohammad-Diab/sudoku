@@ -148,7 +148,7 @@ function generatePossibleNumber(rows, columns, blocks) {
 }
 
 function solveGrid(possibleNumber, rows) {
-    var solotion = [];
+    var solution = [];
 
     // solve Sudoku with a backtracking algorithm
     // Steps are:
@@ -160,13 +160,13 @@ function solveGrid(possibleNumber, rows) {
     //  6.  if next row hasn't any possible left then go the previous row and try the next possibility from possibility rows' list
     //  7.  if the last row has reached and a row fit in it has found then the grid has solved
 
-    var result = nextStep(0, possibleNumber, rows, solotion);
+    var result = nextStep(0, possibleNumber, rows, solution);
     if (result == 1)
-        return solotion;
+        return solution;
 }
 
 // level is current row number in the grid
-function nextStep(level, possibleNumber, rows, solotion) {
+function nextStep(level, possibleNumber, rows, solution) {
     // get possible number fit in each cell in this row
     var x = possibleNumber.slice(level * 9, (level + 1) * 9);
 
@@ -178,14 +178,14 @@ function nextStep(level, possibleNumber, rows, solotion) {
     // try every numbers sequence in this list and go to next row
     for (var num in y) {
         for (var i = level + 1; i < 9; i++)
-            solotion[i] = rows[i];
-        solotion[level] = y[num];
+            solution[i] = rows[i];
+        solution[level] = y[num];
         if (level < 8) {
-            var cols = getColumns(solotion);
-            var blocks = getBlocks(solotion);
+            var cols = getColumns(solution);
+            var blocks = getBlocks(solution);
 
-            var poss = generatePossibleNumber(solotion, cols, blocks);
-            if (nextStep(level + 1, poss, rows, solotion) == 1)
+            var poss = generatePossibleNumber(solution, cols, blocks);
+            if (nextStep(level + 1, poss, rows, solution) == 1)
                 return 1;
         }
         if (level == 8)
@@ -283,6 +283,31 @@ function ViewPuzzle(grid) {
             }
         }
     }
+}
+
+// check value if it is correct or wrong
+// return:
+//  0 for value can't be changed
+//  1 for correct value
+//  2 for value that hasn't any conflict with other values
+//  3 for value that conflict with value in its row, column or block
+//  4 for incorect input
+
+function checkValue(value, row, column, block, defaultValue, currectValue) {
+    if (value === "" || value === '0')
+        return 0;
+    if (!(value > '0' && value < ':'))
+        return 4;
+    if (value === defaultValue)
+        return 0;
+    if ((row.indexOf(value) != row.lastIndexOf(value))
+        || (column.indexOf(value) != column.lastIndexOf(value))
+        || (block.indexOf(value) != block.lastIndexOf(value))) {
+        return 3;
+    }
+    if (value !== currectValue)
+        return 2;
+    return 1;
 }
 
 // update value of remaining numbers in html page
@@ -460,13 +485,29 @@ function startGameButtonClick() {
     hideDialogButtonClick('dialog');
     gameId++;
     document.getElementById("game-number").innerText = "game #" + gameId;
+
+
+    // hide solver buttons
+    // show other buttons
+    document.getElementById("moreoption-sec").style.display = "block";
+    document.getElementById("pause-btn").style.display = "block";
+    document.getElementById("check-btn").style.display = "block";
+    document.getElementById("isunique-btn").style.display = "none";
+    document.getElementById("solve-btn").style.display = "none";
+
+    // prerpare view for new game
+    document.getElementById("timer-label").innerText = "Time";
+    document.getElementById("timer").innerText = "00:00";
+    document.getElementById("game-difficulty-label").innerText = "Game difficulty";
+
+
     document.getElementById("game-difficulty").innerText = difficulty < difficulties.length ? difficulties[difficulty].value : "solved";
 }
 
 // pause \ continue button click function
 function pauseGameButtonClick() {
-    var icon = document.getElementById("pauseIcon");
-    var label = document.getElementById("pauseText");
+    var icon = document.getElementById("pause-icon");
+    var label = document.getElementById("pause-text");
     var table = document.getElementById("puzzle-grid");
 
     // change icon and label of the button and hide or show the grid
@@ -512,14 +553,14 @@ function checkButtonClick() {
         var blocks = getBlocks(currentGrid);
 
         var errors = 0;
-        var rights = 0;
+        var currects = 0;
         // check value if it is correct or wrong
         // return:
         //  1 for correct value
         //  2 for value that hasn't any conflict with other values
         //  3 for value that conflict with value in its row, column or block
         //  0 for value can't be changed
-        function checkValue(i, j, rows, columns, blocks) {
+        /*function checkValue(i, j, rows, columns, blocks) {
             if (!(rows[i][j] > '0' && rows[i][j] < ':'))
                 return 3;
             if (puzzle[i][j] === rows[i][j])
@@ -532,12 +573,13 @@ function checkButtonClick() {
             if (solution[i][j] !== rows[i][j])
                 return 2;
             return 1;
-        }
+        }*/
+
         for (var i = 0; i < currentGrid.length; i++) {
             for (var j = 0; j < currentGrid[i].length; j++) {
                 if (currentGrid[i][j] == "0")
                     continue;
-                var result = checkValue(i, j, currentGrid, columns, blocks);
+                var result = checkValue(row[i][j], row[i], columns[j], blocks[Math.floor(i / 3) * 3 + Math.floor(j / 3)], puzzle[i][j], solution[i][j]);
 
                 // check value if it is correct or wrong
                 var input = table.rows[i].cells[j].getElementsByTagName('input')[0];
@@ -550,27 +592,27 @@ function checkButtonClick() {
                 // add a new class to represent current cell's state
                 if (result === 1) {
                     input.classList.add("right-cell");
-                    rights++;
+                    currects++;
                 } else if (result === 2) {
                     input.classList.add("worning-cell");
                 } else if (result === 3) {
                     input.classList.add("wrong-cell");
                     errors++;
                 } else if (result == 0) {
-                    rights++;
+                    currects++;
                 }
             }
         }
 
         // if all values are correct and they equal original values then game over and the puzzle has been solved
         // if all values are correct and they aren't equal original values then game over but the puzzle has not been solved yet
-        if (rights === 81) {
+        if (currects === 81) {
             gameOn = false;
             pauseTimer = true;
             document.getElementById("game-difficulty").innerText = "Solved";
             clearInterval(intervalId);
             alert("Congrats, You solved it.");
-        } else if (errors === 0 && rights === 0) {
+        } else if (errors === 0 && currects === 0) {
             alert("Congrats, You solved it, but this is not the solution that I want.");
         }
     }
@@ -754,3 +796,146 @@ function hideHamburgerClick() {
 
 
 // sudoku solver section
+
+// 
+function sudokuSolverMenuClick() {
+
+    //stop current game if its running
+    if (gameOn) {
+        gameOn = false;
+        clearInterval(intervalId);
+    }
+
+
+
+    // hide hamburger menu
+    hideHamburgerClick();
+    // generate empty grid
+    var grid = [];
+    for (var i = 0; i < 9; i++) {
+        grid.push("");
+        for (var j = 0; j < 9; j++) {
+            grid[i] += "0";
+        }
+    }
+
+    // view empty grid... allow user to edit all cells
+    ViewPuzzle(grid);
+
+    // update remaining table
+    remaining = [9, 9, 9, 9, 9, 9, 9, 9, 9];
+    updateRemainingTable();
+
+    // show solve and check unique buttons
+    // hide other buttons
+    document.getElementById("moreoption-sec").style.display = "none";
+    document.getElementById("pause-btn").style.display = "none";
+    document.getElementById("check-btn").style.display = "none";
+    document.getElementById("isunique-btn").style.display = "block";
+    document.getElementById("solve-btn").style.display = "block";
+
+    // change status card view
+    // timer for time takes to solve grid
+    // gameid show text "sudoku solver"
+    // difficulty show if grid solved is unique
+    document.getElementById("timer-label").innerText = "Solve time";
+    document.getElementById("timer").innerText = "00:00";
+    document.getElementById("game-difficulty-label").innerText = "Is unique";
+    document.getElementById("game-difficulty").innerText = "Unknown";
+    document.getElementById("game-number").innerText = "#Soduko_Solver"
+
+    //focus first cell
+    document.getElementById("puzzle-grid").rows[0].cells[0].getElementsByTagName('input')[0].focus();
+}
+
+function solveButtonClick() {
+
+    // check if game is on
+
+    // read current state
+    var grid = [];
+    var table = document.getElementById("puzzle-grid");
+    for (var i = 0; i < 9; i++) {
+        grid.push("");
+        for (var j = 0; j < 9; j++) {
+            var input = table.rows[i].cells[j].getElementsByTagName('input')[0];
+            if (input.value == "" || input.value.length > 1 || input.value == "0") {
+                input.value = ""
+                grid[i] += "0";
+            }
+            else
+                grid[i] += input.value;
+        }
+    }
+
+    var columns = getColumns(grid);
+    var blocks = getBlocks(grid);
+
+    // check if there is any conflict
+    var errors = 0;
+    var correct = 0;
+
+    for (var i = 0; i < grid.length; i++) {
+        for (var j = 0; j < grid[i].length; j++) {
+            var result = checkValue(grid[i][j], grid[i], columns[j], blocks[Math.floor(i / 3) * 3 + Math.floor(j / 3)], -1, -1);
+
+            //  2 for value that hasn't any conflict with other values
+            //  3 for value that conflict with value in its row, column or block
+            //  4 for incorect input
+            correct = correct + ((result === 2) ? 1 : 0);
+            errors = errors + ((result > 2) ? 1 : 0);
+
+            var input = table.rows[i].cells[j].getElementsByTagName('input')[0];
+            // remove old class from input
+            input.classList.remove("right-cell");
+            input.classList.remove("worning-cell");
+            input.classList.remove("wrong-cell");
+
+            if (result > 2)
+                input.classList.add("wrong-cell");
+        }
+    }
+
+    // check if invalid input
+    if (errors > 0) {
+        alert("This grid can't be solved because of an invalid input")
+        return;
+    }
+
+    // check if grid is already solved
+    if (correct === 81) {
+        alert("This grid is already solved")
+        return;
+    }
+
+    //read the current time
+    var time = Date.now();
+
+    // solve the grid
+    var solution = solveGrid(generatePossibleNumber(grid, columns, blocks), grid);
+
+    // show result
+    // get time
+    time = Date.now() - time;
+
+    document.getElementById("timer").innerText = Math.floor(time / 1000) + "." + ("000" + (time % 1000)).slice(-3);
+    
+    if (solution === undefined) {
+        alert("this grid has no solution");
+        return;
+    }
+
+    
+    remaining = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    updateRemainingTable();
+
+    for (var i = 0; i < 9; i++) {
+        for (var j = 0; j < 9; j++) {
+            var input = table.rows[i].cells[j].getElementsByTagName('input')[0];
+            input.value = solution[i][j];
+            input.disabled = true;
+        }
+    }
+
+
+}
