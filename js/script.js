@@ -671,7 +671,7 @@ function checkButtonClick() {
                     continue;
 
                 // check value if it is correct or wrong
-                var result = checkValue(row[i][j], row[i], columns[j], blocks[Math.floor(i / 3) * 3 + Math.floor(j / 3)], puzzle[i][j], solution[i][j]);
+                var result = checkValue(currentGrid[i][j], currentGrid[i], columns[j], blocks[Math.floor(i / 3) * 3 + Math.floor(j / 3)], puzzle[i][j], solution[i][j]);
 
                 // remove old class from input and add a new class to represent current cell's state
                 addClassToCell(table.rows[i].cells[j].getElementsByTagName('input')[0], result === 1 ? "right-cell" : (result === 2 ? "worning-cell" : (result === 3 ? "wrong-cell" : undefined)));
