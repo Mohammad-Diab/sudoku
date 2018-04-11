@@ -930,6 +930,11 @@ function sudokuSolverMenuClick() {
 
 function solveButtonClick() {
 
+    if (gameOn) {
+        gameOn = false;
+        clearInterval(intervalId);
+    }
+    
     var result = solveSudoku(true);
     switch (result) {
         case 0:
