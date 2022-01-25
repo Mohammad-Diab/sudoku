@@ -69,12 +69,6 @@
                         <span style="left:12px;">Sudoku Solver</span>
                     </div>
                 </button>
-                <button onclick="showDialogClick('about-dialog');" ripple-color="#003c8f" class="button nav-item vertical-adjust" >
-                    <div>
-                        <span class="material-icons">star</span>
-                        <span style="left:12px;">About</span>
-                    </div>
-                </button>
                 <div class="bar-footer">
                     <ul>
                         <a href="#" class="bar-footer-link">Site feedback</a>
@@ -133,34 +127,6 @@
             <div class="dialog-footer">
                 <button onclick="startGameButtonClick();" ripple-color="#003c8f" class="button dialog-btn vertical-adjust" >OK</button>
                 <button onclick="hideDialogButtonClick('dialog');" ripple-color="#202020" class="button dialog-btn vertical-adjust" >Cancel</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="about-dialog" class="dialog">
-
-        <div id="about-dialog-box" onblur="hideDialogButtonClick('about-dialog');" class="dialog-content about-dialog-content">
-            <div class="dialog-header">CodeTeam6</div>
-
-            <div class="dialog-body">
-                <p>about us</p>
-                <div class="card-group">
-                    <div class="card dialog-card">
-                        <div class="about-card-img">
-                            <img src="img/m_diab.jpg" alt="" />
-                        </div>
-                        <div class="about-card-title">Mohammad Diab</div>
-                        <div class="about-card-content">Syria</div>
-                        <div class="about-card-quote">I love problems, algorithms are my life.</div>
-                    </div>
-
-
-                </div>
-            </div>
-
-            <div class="dialog-footer">
-                <button onclick="hideDialogButtonClick('about-dialog');" ripple-color="#003c8f" class="button dialog-btn vertical-adjust"
-                    >OK</button>
             </div>
         </div>
     </div>
@@ -559,9 +525,7 @@
         <span class="material-icons">code</span>
         <span>with</span>
         <span class="material-icons">favorite</span>
-        <span>by Mohammad Diab from</span>
-        <a href="#"  onclick="showDialogClick('about-dialog');" >#codeTeam6</a>
-        <span> . © 2018 all right reserved.</span>
+        <span>by Mohammad Diab from #codeTeam6 . © 2018 all right reserved.</span>
     </div>
     <script src="js/script.js"></script>
 </body>

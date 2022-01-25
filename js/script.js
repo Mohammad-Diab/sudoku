@@ -555,13 +555,10 @@ window.onload = function () {
 // function to hide dialog opened in window
 window.onclick = function (event) {
     var d1 = document.getElementById("dialog");
-    var d2 = document.getElementById("about-dialog");
     var m1 = document.getElementById("more-option-list");
 
     if (event.target == d1) {
         hideDialogButtonClick("dialog");
-    } else if (event.target == d2) {
-        hideDialogButtonClick("about-dialog");
     } else if (m1.style.visibility == "visible") {
         hideMoreOptionMenu();
     }
